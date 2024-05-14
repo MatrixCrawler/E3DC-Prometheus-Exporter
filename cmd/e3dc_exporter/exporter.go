@@ -3,7 +3,6 @@ package e3dc_exporter
 import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spali/go-rscp/rscp"
-	"log"
 )
 
 const namespace = "e3dc"
@@ -32,7 +31,7 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	exporterData, err := getValues(valuesToQuery)
 	if err != nil {
 		ch <- prometheus.MustNewConstMetric(up, prometheus.GaugeValue, 0)
-		log.Println(err)
+		logger.Error(err)
 		return
 	}
 	for _, value := range exporterData {
@@ -54,7 +53,8 @@ func getValues(e3dcValues []e3dcValue) ([]e3dcValue, error) {
 	}
 	results, err := client.SendMultiple(messages)
 	if err != nil {
-		log.Fatalf("Could not send messages to e3dc: %v", err)
+		logger.Errorf("Could not send messages to e3dc: %v", err)
+		return nil, err
 	}
 	for _, result := range results {
 		for _, value := range e3dcValues {
@@ -67,7 +67,7 @@ func getValues(e3dcValues []e3dcValue) ([]e3dcValue, error) {
 }
 
 func getClient() (*rscp.Client, error) {
-	client, err := rscp.NewClient(parseConfig(configFileName))
+	client, err := rscp.NewClient(config.E3DC)
 	if err != nil {
 		return nil, err
 	}

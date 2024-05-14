@@ -1,0 +1,8 @@
+[ExporterConfig]
+Loglevel = "ERROR"
+
+[e3dc]
+address = "172.0.0.1"
+username = "e3dc_user"
+password = "supersafepassword"
+key = "Sup3rS4v3K3y"
