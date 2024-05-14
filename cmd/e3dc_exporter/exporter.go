@@ -34,9 +34,26 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 		logger.Error(err)
 		return
 	}
+	ch <- prometheus.MustNewConstMetric(up, prometheus.GaugeValue, 1)
 	for _, value := range exporterData {
-		ch <- prometheus.MustNewConstMetric(value.Description, prometheus.GaugeValue, float64(value.Message.Value.(int32)))
+		v := getValueFromMessage(value.Message)
+		ch <- prometheus.MustNewConstMetric(value.Description, prometheus.GaugeValue, v)
 	}
+}
+
+func getValueFromMessage(message rscp.Message) float64 {
+	switch message.DataType {
+	case rscp.Char8:
+		return float64(message.Value.(int8))
+	case rscp.UChar8:
+		return float64(message.Value.(uint8))
+	case rscp.Int32:
+		return float64(message.Value.(int32))
+	case rscp.Uint32:
+		return float64(message.Value.(uint32))
+	}
+	logger.Warn("Got no value from message")
+	return 0
 }
 
 func getValues(e3dcValues []e3dcValue) ([]e3dcValue, error) {
@@ -49,25 +66,35 @@ func getValues(e3dcValues []e3dcValue) ([]e3dcValue, error) {
 	}(client)
 	var messages []rscp.Message
 	for _, value := range e3dcValues {
-		messages = append(messages, rscp.Message{Tag: value.Tag})
+		messages = append(messages, rscp.Message{Tag: value.RequestTag, DataType: value.RequestTag.DataType()})
 	}
 	results, err := client.SendMultiple(messages)
 	if err != nil {
 		logger.Errorf("Could not send messages to e3dc: %v", err)
 		return nil, err
 	}
+	var e3dcResult []e3dcValue
 	for _, result := range results {
 		for _, value := range e3dcValues {
-			if value.Tag == result.Tag {
-				value.Message = result
+			if value.ResultTag == result.Tag {
+				e3dcResult = append(e3dcResult, e3dcValue{
+					RequestTag:  value.RequestTag,
+					ResultTag:   value.ResultTag,
+					Description: value.Description,
+					Message: rscp.Message{
+						Tag:      result.Tag,
+						DataType: result.DataType,
+						Value:    result.Value,
+					},
+				})
 			}
 		}
 	}
-	return e3dcValues, nil
+	return e3dcResult, nil
 }
 
 func getClient() (*rscp.Client, error) {
-	client, err := rscp.NewClient(config.E3DC)
+	client, err := rscp.NewClient(config.ClientConfig)
 	if err != nil {
 		return nil, err
 	}
