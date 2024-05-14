@@ -15,7 +15,8 @@ type ExporterConfig struct {
 func parseConfig(fileName string) rscp.ClientConfig {
 	cfg, err := ini.Load(fileName)
 	if err != nil {
-		log.Fatalf("Failed to read config file: %v", err)
+		log.Printf("Failed to read config file: %v", err)
+		return rscp.ClientConfig{}
 	}
 	return rscp.ClientConfig{
 		Address:  cfg.Section("").Key("address").String(),
