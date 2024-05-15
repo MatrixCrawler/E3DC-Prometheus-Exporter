@@ -1,8 +1,8 @@
 package e3dc_exporter
 
 import (
-	"github.com/pelletier/go-toml/v2"
 	"github.com/spali/go-rscp/rscp"
+	"gopkg.in/yaml.v3"
 	"os"
 )
 
@@ -13,7 +13,11 @@ type Config struct {
 }
 
 type ExporterConfig struct {
-	LogLevel string
+	Log struct {
+		Level  string
+		Output string
+		File   string
+	}
 }
 
 type E3DCConfig struct {
@@ -23,20 +27,16 @@ type E3DCConfig struct {
 	Key      string
 }
 
-var config = Config{
-	ExporterConfig: ExporterConfig{
-		LogLevel: "ERROR",
-	},
-}
+var config = Config{}
 
 func parseConfig(fileName string) rscp.ClientConfig {
 	configFile, err := os.ReadFile(fileName)
 	if err != nil {
 		logger.Fatalf("Error opening config file %q. %v", fileName, err)
 	}
-	err = toml.Unmarshal(configFile, &config)
+	err = yaml.Unmarshal(configFile, &config)
 	if err != nil {
-		logger.Fatalf("Error unmarshalling toml config file: %v", err)
+		logger.Fatalf("Error unmarshalling yaml config file: %v", err)
 	}
 	config.ClientConfig = rscp.ClientConfig{
 		Address:  config.E3DC.Address,

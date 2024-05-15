@@ -7,15 +7,18 @@ import (
 	"net/http"
 )
 
-const fileName = "config.toml"
+const fileName = "config.yml"
 
 var logger *logrus.Logger
-var version string
 
 func Run() {
-	logger = InitLogger("ERROR")
+	logger = InitLogger(ExporterConfig{Log: struct {
+		Level  string
+		Output string
+		File   string
+	}{Level: "ERROR"}})
 	parseConfig(fileName)
-	logger = InitLogger(config.ExporterConfig.LogLevel)
+	logger = InitLogger(config.ExporterConfig)
 	startPrometheusExporter()
 }
 
@@ -30,11 +33,11 @@ func startPrometheusExporter() {
 		_, _ = w.Write([]byte(`<html>
              <head><title>E3DC Exporter</title></head>
              <body>
-             <h1>Mirth Channel Exporter</h1>
+             <h1>E3DC Exporter</h1>
              <p><a href='/metrics'>Metrics</a></p>
              </body>
              </html>`))
 	})
-	logger.Info("Starting prometheus exporter")
+	logger.Info("Starting e3dc exporter")
 	logger.Fatal(http.ListenAndServe(":10998", nil))
 }

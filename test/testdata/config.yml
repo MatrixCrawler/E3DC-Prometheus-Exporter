@@ -1,0 +1,13 @@
+---
+
+exporterconfig:
+  log:
+    level: DEBUG
+    output: file
+    file: log/e3dc-exporter.log
+
+e3dc:
+  address: 172.0.0.1
+  username: e3dc_user
+  password: supersafepassword
+  key: Sup3rS4v3K3y
