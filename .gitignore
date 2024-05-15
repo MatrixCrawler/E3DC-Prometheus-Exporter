@@ -101,4 +101,5 @@ fabric.properties
 .gitconfig
 
 vendor
-config.toml
+config.yml
+log

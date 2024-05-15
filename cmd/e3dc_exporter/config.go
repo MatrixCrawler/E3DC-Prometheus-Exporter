@@ -13,7 +13,8 @@ type Config struct {
 }
 
 type ExporterConfig struct {
-	Log struct {
+	Port int
+	Log  struct {
 		Level  string
 		Output string
 		File   string

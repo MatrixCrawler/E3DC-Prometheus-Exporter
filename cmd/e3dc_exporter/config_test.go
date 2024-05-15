@@ -12,6 +12,7 @@ func Test_parseConfig(t *testing.T) {
 		File   string
 	}{Level: "DEBUG"}})
 	parseConfig("../../test/testdata/config.yml")
+	assert.Equal(t, 1234, config.ExporterConfig.Port)
 	assert.Equal(t, "DEBUG", config.ExporterConfig.Log.Level)
 	assert.Equal(t, "file", config.ExporterConfig.Log.Output)
 	assert.Equal(t, "log/e3dc-exporter.log", config.ExporterConfig.Log.File)

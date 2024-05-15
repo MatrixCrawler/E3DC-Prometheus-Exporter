@@ -4,7 +4,7 @@
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/MatrixCrawler/E3DC-Prometheus-Exporter)
 
 # E3DC-Prometheus-Exporter
-A prometheus exporter for [E3/DC](https://www.e3dc.com/en/) solar power management system
+A prometheus exporter for [E3/DC](https://www.e3dc.com/en/) solar power management system.
 
 ## Usage
 You will have to create a ```config.yml``` file next to the binary for configuring the exporters connection to the [E3/DC](https://www.e3dc.com/en/) System.  
@@ -14,7 +14,11 @@ The layout is as follows
 ---
 
 exporterconfig:
-  loglevel: DEBUG
+  port: 10998
+  log:
+    level: ERROR
+    out: stdout  # or file if you want to log to a file
+    file: PathToLogFile
 
 e3dc:
   address: 172.0.0.1

@@ -1,6 +1,7 @@
 ---
 
 exporterconfig:
+  port: 1234
   log:
     level: DEBUG
     output: file

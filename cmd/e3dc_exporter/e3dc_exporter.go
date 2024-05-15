@@ -1,6 +1,7 @@
 package e3dc_exporter
 
 import (
+	"fmt"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
@@ -38,6 +39,6 @@ func startPrometheusExporter() {
              </body>
              </html>`))
 	})
-	logger.Info("Starting e3dc exporter")
-	logger.Fatal(http.ListenAndServe(":10998", nil))
+	logger.Infof("Starting e3dc exporter on port %v", config.ExporterConfig.Port)
+	logger.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", config.ExporterConfig.Port), nil))
 }
