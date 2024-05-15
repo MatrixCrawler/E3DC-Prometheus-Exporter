@@ -1,5 +1,6 @@
 [![Build Status](https://github.com/MatrixCrawler/E3DC-Prometheus-Exporter/actions/workflows/test.yml/badge.svg)](https://github.com/warrensbox/terraform-switcher/actions/workflows/build.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/MatrixCrawler/E3DC-Prometheus-Exporter)](https://goreportcard.com/report/github.com/MatrixCrawler/E3DC-Prometheus-Exporter)
+[![CodeQL](https://github.com/MatrixCrawler/E3DC-Prometheus-Exporter/workflows/CodeQL/badge.svg)](https://github.com/MatrixCrawler/E3DC-Prometheus-Exporter/actions?query=workflow%3A%22CodeQL%22)
 ![GitHub Release](https://img.shields.io/github/v/release/MatrixCrawler/E3DC-Prometheus-Exporter)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/MatrixCrawler/E3DC-Prometheus-Exporter)
 
