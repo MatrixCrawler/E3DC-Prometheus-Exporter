@@ -12,4 +12,4 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Ping endpoint
-        run: curl "https://proxy.golang.org/github.com/MatrixCrawler/E3DC-Prometheus-Exporter/@v/$(git describe HEAD --tags --abbrev=0).info"
+        run: curl "https://proxy.golang.org/github.com/$GITHUB_REPOSITORY/@v/$(git describe HEAD --tags --abbrev=0).info"
