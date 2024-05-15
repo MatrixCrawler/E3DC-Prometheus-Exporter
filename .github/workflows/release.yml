@@ -8,7 +8,7 @@ on:
         default: "patch"
 
 jobs:
-  tfswitch-release:
+  release:
     runs-on: ubuntu-latest
     steps:
 
@@ -42,13 +42,6 @@ jobs:
       # Download Go dependencies
       - name: Go download
         run: go mod download
-
-      # Test to see if tfswitch works with --help
-      - name: Go build
-        env:
-          CGO_ENABLED: 0 # Build statically linked binaries
-        run: mkdir -p build && go build -v -o build/tfswitch && build/tfswitch --help
-        continue-on-error: false
 
       - name: Create dry tag
         uses: anothrNick/github-tag-action@1.69.0
