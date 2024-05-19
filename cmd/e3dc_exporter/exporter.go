@@ -51,8 +51,11 @@ func getValueFromMessage(message rscp.Message) float64 {
 		return float64(message.Value.(int32))
 	case rscp.Uint32:
 		return float64(message.Value.(uint32))
+	case rscp.Float32:
+		return float64(message.Value.(float32))
+	default:
+		logger.Warn("Got no value from message or could not decode value")
 	}
-	logger.Warn("Got no value from message")
 	return 0
 }
 
