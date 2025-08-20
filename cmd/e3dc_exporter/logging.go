@@ -1,9 +1,10 @@
 package e3dc_exporter
 
 import (
+	"os"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spali/go-rscp/rscp"
-	"os"
 )
 
 func InitLogger(config ExporterConfig) *logrus.Logger {

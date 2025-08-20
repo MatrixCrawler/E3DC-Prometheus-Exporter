@@ -1,8 +1,9 @@
 package e3dc_exporter
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_parseConfig(t *testing.T) {

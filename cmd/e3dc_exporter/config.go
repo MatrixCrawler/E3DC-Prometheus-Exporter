@@ -1,9 +1,10 @@
 package e3dc_exporter
 
 import (
+	"os"
+
 	"github.com/spali/go-rscp/rscp"
 	"gopkg.in/yaml.v3"
-	"os"
 )
 
 type Config struct {

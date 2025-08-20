@@ -1,9 +1,10 @@
 package e3dc_exporter
 
 import (
+	"strings"
+
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spali/go-rscp/rscp"
-	"strings"
 )
 
 type e3dcValue struct {
