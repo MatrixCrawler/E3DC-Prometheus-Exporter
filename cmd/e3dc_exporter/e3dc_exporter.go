@@ -2,10 +2,11 @@ package e3dc_exporter
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
-	"net/http"
 )
 
 const fileName = "config.yml"
