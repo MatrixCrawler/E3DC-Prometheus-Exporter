@@ -19,7 +19,7 @@ jobs:
 
       # Install Go
       - name: Install Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: '1.25' # The Go version to download (if necessary) and use
 
